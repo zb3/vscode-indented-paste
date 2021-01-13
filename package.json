@@ -1,0 +1,36 @@
+{
+	"name": "vscode-indented-paste",
+	"displayName": "Indented Paste",
+	"description": "Paste with the indent at cursor position by pressing Ctrl-Shift-V",
+	"version": "0.1.0",
+	"publisher": "zb3",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zb3/vscode-indented-paste.git"
+	},
+	"engines": {
+		"vscode": "^1.50.0"
+	},
+	"activationEvents": [
+		"onCommand:indentedPaste.action"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"keybindings": [
+			{
+				"command": "indentedPaste.action",
+				"key": "ctrl+shift+v",
+				"mac": "cmd+shift+v",
+				"when": "editorTextFocus && !editorReadonly"
+			}
+		]
+	},
+	"scripts": {},
+	"devDependencies": {
+		"@types/vscode": "^1.50.0"
+	},
+	"categories": [
+		"Other"
+	]
+}
