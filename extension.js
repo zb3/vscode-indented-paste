@@ -3,6 +3,10 @@
 const vscode = require("vscode");
 let isPasting = false;
 
+function getIndentLength(line) {
+  return line.match(/^[ \t]*/)[0].length;
+}
+
 function getCommonIndentLength(lines) {
   var minLevel = Infinity;
 
@@ -10,7 +14,7 @@ function getCommonIndentLength(lines) {
     const isEmptyLine = /^\s*$/.test(line);
 
     if (!isEmptyLine) { // empty lines are not taken into account
-      const currentIndentLength = line.match(/^[ \t]*/)[0].length;
+      const currentIndentLength = getIndentLength(line);
       minLevel = Math.min(minLevel, currentIndentLength);
     }
   }
@@ -21,6 +25,7 @@ function getCommonIndentLength(lines) {
 function getTextToPaste(editor, selection, pastedLines) {
   const currentLineText = editor.document.lineAt(selection.start.line).text;
   const currentPrefix = currentLineText.substr(0, selection.start.character);
+  const currentIndent = currentPrefix.substr(0, getIndentLength(currentPrefix));
 
   const commonIndentLength = getCommonIndentLength(pastedLines);
 
@@ -33,7 +38,7 @@ function getTextToPaste(editor, selection, pastedLines) {
     }
 
     if (!firstLine) {
-      line = currentPrefix + line;
+      line = currentIndent + line;
     } else {
       firstLine = false;
     }
